@@ -1,0 +1,50 @@
+---
+import type { BASE_PLATE_PROPS } from "@/types/pageplates/types";
+import Layout from "../Layout.astro";
+import FooterMain from "@/features/footer/FooterMain.astro";
+import HeaderMain from "@/features/navbar/HeaderMain.astro";
+
+const {
+  title = "__PROJECT_NAME__",
+  noHeader = false,
+  noFooter = false,
+  noContainer = false,
+  clean = false,
+  expectedHeight = "calc(100vh - 10rem)", // 5rem is header + footer height
+  prefetch,
+  descriptor,
+  html = {},
+} = Astro.props as BASE_PLATE_PROPS;
+
+---
+
+<Layout title={title} html={{...html, itemscope: true, itemtype: "https://schema.org/WebPage"}}>
+  <Fragment slot={`head-first`}>
+
+  </Fragment>
+  <Fragment slot={`head-last`}>
+
+  </Fragment>
+  <div class="relative min-h-screen flex flex-col">
+    {clean?"":<>
+      {noHeader ? "":<>
+        <HeaderMain />
+      </>}
+    </>}
+    <slot name="header" />
+
+    {noContainer ?<>
+      <slot />
+    </>:<>
+      <div class={`container-crs relative`} style={`min-height: ${expectedHeight}`}>
+        <slot />
+      </div>
+    </>}
+
+    {clean?"": <>
+      {noFooter ? "":<>
+        <FooterMain />
+      </>}
+    </>}
+  </div>
+</Layout>
