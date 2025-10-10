@@ -18,3 +18,13 @@ After the project is created, navigate to the project directory and start the de
 cd <your-project-name>
 npm run dev
 ```
+
+## Section 2. Dependencies
+
+This template comes with a set of pre-configured dependencies to get you started quickly. Here's a brief overview of what's included:
+
+-   **Astro (`astro`)**: The core of the project. Astro is a web framework for building fast, content-focused websites.
+-   **Astro Check (`@astrojs/check`)**: A command-line tool for checking your Astro project for errors and validating your TypeScript code.
+-   **Cloudflare Adapter (`@astrojs/cloudflare`)**: This adapter allows you to build and deploy your Astro project to Cloudflare Pages and Workers.
+-   **Sitemap (`@astrojs/sitemap`)**: A utility to automatically generate a `sitemap.xml` file for your site, which helps with SEO.
+-   **Tailwind CSS (`tailwindcss` and `@tailwindcss/vite`)**: A utility-first CSS framework for rapidly building custom designs. The `@tailwindcss/vite` package provides the necessary integration with Vite, Astro's underlying build tool.
