@@ -1,0 +1,21 @@
+{
+  "name": "__PROJECT_NAME__",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "check": "astro check",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "wrangler-types": "wrangler types"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/cloudflare": "^12.6.9",
+    "@astrojs/sitemap": "^3.6.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "astro": "^5.14.1",
+    "tailwindcss": "^4.1.14"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "astro-cfw-template",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "astro-cfw-template": "cli.js"
+  },
+  "files": [
+    "template",
+    "cli.js"
+  ]
+}
