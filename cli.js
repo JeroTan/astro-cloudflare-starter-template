@@ -77,26 +77,31 @@ async function main() {
   const frames = ['📦 Installing dependencies', '📦 Installing dependencies.', '📦 Installing dependencies..', '📦 Installing dependencies...'];
   let frameIndex = 0;
   
+  // Start animation immediately
+  process.stdout.write(frames[0]);
+  
   const loadingInterval = setInterval(() => {
-    process.stdout.write(`\r${frames[frameIndex]}`);
     frameIndex = (frameIndex + 1) % frames.length;
-  }, 500);
+    process.stdout.write(`\r${frames[frameIndex]}`);
+  }, 300); // Faster animation
   
   try {
-    // Run npm install in the project directory (without stdio: inherit to hide npm output during animation)
+    // Run npm install in the project directory
     execSync('npm install', { 
       cwd: targetDir, 
-      stdio: 'pipe' // Hide npm output to keep animation clean
+      stdio: ['pipe', 'pipe', 'inherit'] // Show errors but hide normal output
     });
     
-    // Clear the animation and show success
-    clearInterval(loadingInterval);
-    process.stdout.write('\r📦 Dependencies installed successfully! ✅\n');
-    
-    console.log(`🎉 Project setup complete!`);
-    console.log(`\nNext steps:`);
-    console.log(`  cd ${path.basename(targetDir)}`);
-    console.log(`  npm run dev`);
+    // Clear the animation and show success (with small delay to ensure animation is visible)
+    setTimeout(() => {
+      clearInterval(loadingInterval);
+      process.stdout.write('\r📦 Dependencies installed successfully! ✅\n');
+      
+      console.log(`🎉 Project setup complete!`);
+      console.log(`\nNext steps:`);
+      console.log(`  cd ${path.basename(targetDir)}`);
+      console.log(`  npm run dev`);
+    }, 300);
   } catch (error) {
     // Clear the animation on error
     clearInterval(loadingInterval);
