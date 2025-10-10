@@ -72,26 +72,7 @@ async function main() {
 
   // After creating the project, install dependencies
   console.log(`\n✅ Project "${projectName}" created!`);
-  
-  const frames = ['📦 Installing dependencies', '📦 Installing dependencies.', '📦 Installing dependencies..', '📦 Installing dependencies...'];
-  let frameIndex = 0;
-  let loadingInterval;
-  
-  // Check if terminal supports animation
-  const supportsAnimation = process.stdout.isTTY;
-  
-  if (supportsAnimation) {
-    // Start animation immediately - move to next line first
-    process.stdout.write('\r' + frames[0]);
-    
-    loadingInterval = setInterval(() => {
-      frameIndex = (frameIndex + 1) % frames.length;
-      process.stdout.write(`\r${frames[frameIndex]}`);
-    }, 300);
-  } else {
-    // Fallback for non-TTY environments
-    console.log('\n📦 Installing dependencies...');
-  }
+  console.log('\n📦 Installing dependencies...');
   
   try {
     // Run npm install in the project directory
@@ -101,12 +82,7 @@ async function main() {
     });
     
     // Clear the animation and show success
-    if (supportsAnimation) {
-      clearInterval(loadingInterval);
-      process.stdout.write('\r📦 Dependencies installed successfully! ✅\n');
-    } else {
-      console.log('✅ Dependencies installed successfully!');
-    }
+    console.log('✅ Dependencies installed successfully!');
     
     console.log(`🎉 Project setup complete!`);
     console.log(`\nNext steps:`);
@@ -114,10 +90,6 @@ async function main() {
     console.log(`  npm run dev`);
   } catch (error) {
     // Clear the animation on error
-    if (supportsAnimation && loadingInterval) {
-      clearInterval(loadingInterval);
-      process.stdout.write('\r');
-    }
     console.error(`❌ Failed to install dependencies: ${error.message}`);
     console.log(`\nYou can manually install them later:`);
     console.log(`  cd ${path.basename(targetDir)}`);
