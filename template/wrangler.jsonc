@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "main": "./dist/_worker.js/index.js",
-  "name": "__PROJECT_NAME__",
+  "name": "x--project-name--x",
   "compatibility_date": "2025-03-25",
   "compatibility_flags": [
     // Enable Node.js API
@@ -32,13 +32,19 @@
       "vars":{
         "ENVIRONMENT_STATUS": "live" // For declaring if it is in maintenance or not
       },
-      "name": "__PROJECT_NAME__"
+      // "kv_namespaces": [
+      //   {
+      //     "binding": "x--kv-namespace--x",
+      //     "id": "x--kv-id--x",
+      //   }
+      // ],
+      "name": "x--project-name--x",
     },
     "staging":{
       "vars":{
         "ENVIRONMENT_STATUS": "live" // For declaring if it is in maintenance or not
       },
-      "name": "__PROJECT_NAME__-staging"
+      "name": "x--project-name--x-staging"
     }
   },
   "ai": {

@@ -26,6 +26,12 @@ function ask(question) {
 async function main() {
   const projectName = process.argv[2] || (await ask('Project name: ')); // If user type the command line with the project name or type command then ask later
   const projectLocation = process.argv[3] || (await ask('Where to create the project (. for current directory): ')) || '.'; // Ask for location or default to current directory
+
+  // Optional KV namespace configuration
+  // console.log('\n📦 KV Namespace Configuration (optional - press Enter to skip):');
+  // const kvNamespace = await ask('KV Namespace binding name (e.g., KV_STORAGE): ');
+  // const kvId = kvNamespace ? (await ask('KV Namespace ID: ')) : '';
+  
   rl.close(); // Close the readline interface or clean up
 
   const targetDir = path.resolve(process.cwd(), projectLocation);
@@ -44,7 +50,20 @@ async function main() {
       fs.readdirSync(filePath).forEach(child => replaceInFile(path.join(filePath, child)));
     } else {
       const text = fs.readFileSync(filePath, 'utf8');
-      const replaced = text.replace(/__PROJECT_NAME__/g, projectName);
+      let replaced = text.replace(/x--project-name--x/g, projectName);
+      
+      // Replace KV namespace placeholders only in wrangler.jsonc
+      // if (path.basename(filePath) === 'wrangler.jsonc') {
+      //   if (kvNamespace) {
+      //     replaced = replaced.replace(/x--kv-namespace--x/g, kvNamespace);
+      //     replaced = replaced.replace(/x--kv-id--x/g, kvId || 'your-kv-namespace-id');
+      //   } else {
+      //     // If no KV namespace provided, keep placeholders for manual setup later
+      //     replaced = replaced.replace(/x--kv-namespace--x/g, 'KV_STORAGE');
+      //     replaced = replaced.replace(/x--kv-id--x/g, 'your-kv-namespace-id');
+      //   }
+      // }
+      
       fs.writeFileSync(filePath, replaced);
     }
   };
