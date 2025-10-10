@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "check": "astro check",
     "test": "vitest",
-    "build": "astro check && vitest && astro build",
+    "build": "astro check && vitest run && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "wrangler-types": "wrangler types"
