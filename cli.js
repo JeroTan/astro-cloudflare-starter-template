@@ -72,21 +72,36 @@ async function main() {
 
   // After creating the project, install dependencies
   console.log(`\n✅ Project "${projectName}" created!`);
-  console.log(`📦 Installing dependencies...`);
+  
+  // Loading animation for dependencies installation
+  const frames = ['📦 Installing dependencies', '📦 Installing dependencies.', '📦 Installing dependencies..', '📦 Installing dependencies...'];
+  let frameIndex = 0;
+  
+  const loadingInterval = setInterval(() => {
+    process.stdout.write(`\r${frames[frameIndex]}`);
+    frameIndex = (frameIndex + 1) % frames.length;
+  }, 500);
   
   try {
-    // Run npm install in the project directory
+    // Run npm install in the project directory (without stdio: inherit to hide npm output during animation)
     execSync('npm install', { 
       cwd: targetDir, 
-      stdio: 'inherit' // This shows the npm output in real-time
+      stdio: 'pipe' // Hide npm output to keep animation clean
     });
     
-    console.log(`\n🎉 Project setup complete!`);
+    // Clear the animation and show success
+    clearInterval(loadingInterval);
+    process.stdout.write('\r📦 Dependencies installed successfully! ✅\n');
+    
+    console.log(`🎉 Project setup complete!`);
     console.log(`\nNext steps:`);
     console.log(`  cd ${path.basename(targetDir)}`);
     console.log(`  npm run dev`);
   } catch (error) {
-    console.error(`\n❌ Failed to install dependencies: ${error.message}`);
+    // Clear the animation on error
+    clearInterval(loadingInterval);
+    process.stdout.write('\r');
+    console.error(`❌ Failed to install dependencies: ${error.message}`);
     console.log(`\nYou can manually install them later:`);
     console.log(`  cd ${path.basename(targetDir)}`);
     console.log(`  npm install`);
