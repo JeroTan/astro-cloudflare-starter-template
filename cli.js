@@ -70,6 +70,13 @@ async function main() {
 
   replaceInFile(targetDir);
 
+  // Rename gitignore.template back to .gitignore
+  const gitignoreTemplatePath = path.join(targetDir, 'gitignore.template');
+  const gitignorePath = path.join(targetDir, '.gitignore');
+  if (fs.existsSync(gitignoreTemplatePath)) {
+    fs.renameSync(gitignoreTemplatePath, gitignorePath);
+  }
+
   // After creating the project, install dependencies
   console.log(`\n✅ Project "${projectName}" created!`);
   console.log('\n📦 Installing dependencies...');
