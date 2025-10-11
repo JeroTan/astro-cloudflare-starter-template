@@ -7,6 +7,8 @@
     "check": "astro check",
     "test": "vitest",
     "build": "astro check && vitest run && astro build",
+    "deploy-staging": "npx wrangler@latest deploy --env=\"staging\"",
+    "deploy-production": "npx wrangler@latest deploy --env=\"production\"",
     "preview": "astro preview",
     "astro": "astro",
     "wrangler-types": "wrangler types"
