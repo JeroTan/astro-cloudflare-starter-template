@@ -39,15 +39,18 @@
       //   }
       // ],
       "name": "x--project-name--x",
+      "ai": {
+        "binding": "AI"
+      }
     },
     "staging":{
       "vars":{
         "ENVIRONMENT_STATUS": "live" // For declaring if it is in maintenance or not
       },
-      "name": "x--project-name--x-staging"
+      "name": "x--project-name--x-staging",
+      "ai": {
+        "binding": "AI"
+      }
     }
   },
-  "ai": {
-    "binding": "AI"
-  }
 }
