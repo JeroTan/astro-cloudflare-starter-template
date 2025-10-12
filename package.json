@@ -8,5 +8,8 @@
   "files": [
     "template",
     "cli.js"
-  ]
+  ],
+  "devDependencies": {
+    "schema-dts": "^1.1.5"
+  }
 }

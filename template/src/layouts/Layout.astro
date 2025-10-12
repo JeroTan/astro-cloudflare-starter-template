@@ -2,8 +2,7 @@
 //TailwindCSS and other CSS
 import "@/styles/globals.css";
 //i18n
-import { getLangFromUrl, pathTranslatorQ } from "@/i18/utils";
-import { languages } from "@/i18/lang";
+import { getLangFromUrl } from "@/i18/utils";
 import type { HTMLAttributes } from "astro/types";
 
 interface Props {
@@ -16,7 +15,6 @@ const {
 } = Astro.props;
 
 const currentLang = getLangFromUrl(Astro.url);
-const t = pathTranslatorQ(Astro.url);
 // const newUrl = new URL(Astro.url);
 // const reconstructPathName  = newUrl.toString().replace(newUrl.origin,"")
 ---
@@ -25,13 +23,6 @@ const t = pathTranslatorQ(Astro.url);
 <html lang={currentLang} {...html}>
 	<head>
 		<slot name="head-first" />
-
-		{/* LANG */}
-		{ (Object.keys(languages)).map((lang) => {
-			if(lang === currentLang) return "";
-			return <link rel="alternate" hreflang={lang} href={Astro.url.origin + t(Astro.url.pathname, lang)} />
-		}) }
-		{/* LANG */}
 
 		{/* HTML Format */}
 		<meta name="application-name" content="__PROJECT_NAME__" />
