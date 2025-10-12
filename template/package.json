@@ -21,6 +21,7 @@
     "astro": "^5.14.1",
     "astro-seo": "^0.8.4",
     "lodash": "^4.17.21",
+    "schema-dts": "^1.1.5",
     "tailwindcss": "^4.1.14"
   },
   "devDependencies": {
