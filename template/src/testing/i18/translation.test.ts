@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { translationKeyList, mainTranslation } from "@/i18/translation/mainTranslation";
-import { languages } from "@/i18/lang";
+// import { languages } from "@/i18/lang";
 
 describe("translation", () => {
   it("should have a value for every key in every language", () => {
-    const languageCodes = Object.keys(languages);
+    // const languageCodes = Object.keys(languages);
 
     // Check first how many languages does mainTranslation has
     // The only language that is available will be the one that will be tested

@@ -1,5 +1,4 @@
 import type { SCHEMA_WEB_PAGE_TAGGING_PROPS } from "@/types/seo/pages";
-import type { TAG_IMAGE_OBJECT, } from "@/types/seo/tag";
 import type { QuantitativeValue, WebPage} from "schema-dts"
 
 export function basicWebPageSchemaTags({
