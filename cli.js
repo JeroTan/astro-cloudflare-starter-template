@@ -36,9 +36,23 @@ async function main() {
 
   const targetDir = path.resolve(process.cwd(), projectLocation);
 
+  // Check if target directory exists and handle accordingly
   if (fs.existsSync(targetDir)) {
-    console.error(`❌ Directory "${projectLocation}" already exists.`);
-    process.exit(1);
+    if (projectLocation !== '.') {
+      console.error(`❌ Directory "${projectLocation}" already exists.`);
+      process.exit(1);
+    }
+    
+    // For current directory, check if it's empty
+    const files = fs.readdirSync(targetDir);
+    if (files.length > 0) {
+      console.warn(`⚠️  Current directory is not empty. Files: ${files.slice(0, 3).join(', ')}${files.length > 3 ? '...' : ''}`);
+      const confirm = await ask('Continue anyway? This will overwrite existing files (y/N): ');
+      if (confirm.toLowerCase() !== 'y' && confirm.toLowerCase() !== 'yes') {
+        console.log('❌ Operation cancelled.');
+        process.exit(1);
+      }
+    }
   }
 
   fs.cpSync(templateDir, targetDir, { recursive: true });
