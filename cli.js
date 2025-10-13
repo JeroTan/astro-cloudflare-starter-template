@@ -101,9 +101,17 @@ async function main() {
       cwd: targetDir, 
       stdio: 'inherit' // Show npm output normally
     });
-    
-    // Clear the animation and show success
+
     console.log('✅ Dependencies installed successfully!');
+    
+    // Run npm run check to validate the project setup
+    console.log('\n🔍 Running project validation...');
+    execSync('npm run check', { 
+      cwd: targetDir, 
+      stdio: 'inherit' // Show check output normally
+    });
+    
+    console.log('✅ Project validation passed!');
     
     console.log(`🎉 Project setup complete!`);
     console.log(`\nNext steps:`);
