@@ -1,6 +1,6 @@
 {
   "name": "astro-cfw-template",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "type": "module",
   "bin": {
     "astro-cfw-template": "cli.js"

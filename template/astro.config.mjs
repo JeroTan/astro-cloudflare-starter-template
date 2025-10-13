@@ -1,9 +1,12 @@
 // @ts-check
 import { defineConfig, envField } from 'astro/config';
+import { loadEnv } from 'vite';
 
 import cloudflare from '@astrojs/cloudflare';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from "@astrojs/sitemap";
+
+const env = loadEnv("", process.cwd(), "");
 
 // https://astro.build/config
 export default defineConfig({
@@ -32,7 +35,7 @@ export default defineConfig({
   },
    env: {
     schema: {
-      ENVIRONMENT_STATUS: envField.string({ context: "server", access: "public", default: "live" }),
+      SECRET_ENVIRONMENT_STATUS: envField.string({ context: "server", access: "public", default: "live" }),
     },
   },
   vite: {

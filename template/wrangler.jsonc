@@ -30,7 +30,7 @@
       //   }
       // ],
       "vars":{
-        "ENVIRONMENT_STATUS": "live" // For declaring if it is in maintenance or not
+        "SECRET_ENVIRONMENT_STATUS": "live" // For declaring if it is in maintenance or not
       },
       // "kv_namespaces": [
       //   {
@@ -45,7 +45,7 @@
     },
     "staging":{
       "vars":{
-        "ENVIRONMENT_STATUS": "live" // For declaring if it is in maintenance or not
+        "SECRET_ENVIRONMENT_STATUS": "live" // For declaring if it is in maintenance or not
       },
       "name": "x--project-name--x-staging",
       "ai": {

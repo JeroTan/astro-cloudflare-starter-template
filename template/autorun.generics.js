@@ -6,4 +6,5 @@ let variables = [
   "__PROJECT_PUBLISHER__",
   "__PROJECT_DESCRIPTION__",
   "__PROJECT_FB_APP_ID__", // Also removed the comment associated with this
+  "__YOUR_DOMAIN__",
 ]
