@@ -24,7 +24,7 @@ function ask(question) {
 
 // Main function to create the project
 async function main() {
-  const projectName = process.argv[2] || (await ask('Project name: ')); // If user type the command line with the project name or type command then ask later
+  const projectName = process.argv[2] || (await ask('Project name (my-astro-project): ')) || 'my-astro-project'; // If user type the command line with the project name or type command then ask later
   const projectLocation = process.argv[3] || (await ask('Where to create the project (. for current directory): ')) || '.'; // Ask for location or default to current directory
 
   // Optional KV namespace configuration
