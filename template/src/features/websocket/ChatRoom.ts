@@ -2,38 +2,72 @@ import { DurableObject } from "cloudflare:workers";
 
 export class ChatRoom extends DurableObject {
 	async fetch(request: Request): Promise<Response> {
-    // Creates two ends of a WebSocket connection.
-    const webSocketPair = new WebSocketPair();
-    const [client, server] = Object.values(webSocketPair);
+		// Check for WebSocket upgrade
+		const upgradeHeader = request.headers.get("Upgrade");
+		if (!upgradeHeader || upgradeHeader !== "websocket") {
+			return new Response("Expected Upgrade: websocket", { status: 426 });
+		}
 
-    console.log("ChatRoom Durable Object - New WebSocket Connection");
+		// Create WebSocket pair
+		const webSocketPair = new WebSocketPair();
+		const [client, server] = Object.values(webSocketPair);
 
-    // Calling `acceptWebSocket()` connects the WebSocket to the Durable Object, allowing the WebSocket to send and receive messages.
-    // Unlike `ws.accept()`, `state.acceptWebSocket(ws)` allows the Durable Object to be hibernated
-    // When the Durable Object receives a message during Hibernation, it will run the `constructor` to be re-initialized
-    this.ctx.acceptWebSocket(server);
+		// Accept the WebSocket connection
+		this.ctx.acceptWebSocket(server);
 
-    return new Response(null, {
-      status: 101,
-      webSocket: client,
-    });
-  }
+		const connectionCount = this.ctx.getWebSockets().length;
+		console.log(`New connection. Total connections: ${connectionCount}`);
 
-  async webSocketMessage(ws: WebSocket, message: ArrayBuffer | string) {
-    // Upon receiving a message from the client, reply with the same message,
-    // but will prefix the message with "[Durable Object]: " and return the number of connections.
-    ws.send(
-      `[Durable Object] message: ${message}, connections: ${this.ctx.getWebSockets().length}`,
-    );
-  }
+		// Send system message to the newly connected client
+		const systemMessage = JSON.stringify({
+			system: {
+				message: `WebSocket is connected for id ${this.ctx.id.toString()}`,
+				connections: connectionCount,
+				timestamp: new Date().toISOString(),
+			}
+		});
+		
+		// Send welcome message to the new client
+		server.send(systemMessage);
 
-  async webSocketClose(
-    ws: WebSocket,
-    code: number,
-    reason: string,
-    wasClean: boolean,
-  ) {
-    // If the client closes the connection, the runtime will invoke the webSocketClose() handler.
-    ws.close(code, "Durable Object is closing WebSocket");
-  }
+		return new Response(null, {
+			status: 101,
+			webSocket: client,
+		});
+	}
+
+	async webSocketMessage(ws: WebSocket, message: ArrayBuffer | string) {
+		// Broadcast message to all connected clients
+		const messageText = typeof message === "string" ? message : new TextDecoder().decode(message);
+		
+		console.log(`Broadcasting message: ${messageText}`);
+
+		// Get all WebSockets in this room
+		const webSockets = this.ctx.getWebSockets();
+		
+		// Broadcast to all clients except sender
+		for (const socket of webSockets) {
+			if (socket !== ws) {
+				try {
+					socket.send(messageText);
+				} catch (err) {
+					console.error("Error sending message:", err);
+				}
+			}
+		}
+	}
+
+	async webSocketClose(
+		ws: WebSocket,
+		code: number,
+		reason: string,
+		wasClean: boolean,
+	) {
+		console.log(`WebSocket closed. Code: ${code}, Reason: ${reason}`);
+		ws.close(code, "Durable Object is closing WebSocket");
+	}
+
+	async webSocketError(ws: WebSocket, error: unknown) {
+		console.error("WebSocket error:", error);
+	}
 }
