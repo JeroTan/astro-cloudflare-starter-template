@@ -1,12 +1,12 @@
 const en = {
-  "home.title": "Home"
-}
+	"home.title": "Home",
+};
 
 const th = {
-  "home.title": "บ้าน"
-}
+	"home.title": "บ้าน",
+};
 
 export const ui = {
-  en,
-  th,
+	en,
+	th,
 };
