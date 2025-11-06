@@ -35,7 +35,8 @@
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_classes": ["ChatRoom"]
+			"new_classes": ["ChatRoom"],
+			"new_sqlite_classes": ["ChatRoom"]
 		}
 	],
 	"env": {
@@ -66,7 +67,8 @@
 			"migrations": [
 				{
 					"tag": "v1",
-					"new_classes": ["ChatRoom"]
+					"new_classes": ["ChatRoom"],
+					"new_sqlite_classes": ["ChatRoom"]
 				}
 			],
 			"name": "x--project-name--x",
@@ -89,7 +91,8 @@
 			"migrations": [
 				{
 					"tag": "v1",
-					"new_classes": ["ChatRoom"]
+					"new_classes": ["ChatRoom"],
+					"new_sqlite_classes": ["ChatRoom"]
 				}
 			],
 			"name": "x--project-name--x-staging",
