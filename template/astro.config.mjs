@@ -12,6 +12,10 @@ const env = loadEnv("", process.cwd(), "");
 export default defineConfig({
 	adapter: cloudflare({
 		imageService: "compile",
+		workerEntryPoint: {
+			path: "src/cloudflare/worker.ts",
+			// namedExports: ["ChatRoom"],
+		}
 	}),
 	image: {
 		// Allow processing all images from remote. This allow modifying the images size depending on the device.

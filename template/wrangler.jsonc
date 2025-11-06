@@ -21,6 +21,23 @@
 		"enabled": true,
 		"head_sampling_rate": 1,
 	},
+	"ai": {
+		"binding": "AI",
+	},
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "ChatRoom",
+				"name": "CHAT_ROOM"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_classes": ["ChatRoom"]
+		}
+	],
 	"env": {
 		"production": {
 			// "routes": [ // This is for creating custom domains
@@ -38,6 +55,20 @@
 			//     "id": "x--kv-id--x",
 			//   }
 			// ],
+			"durable_objects": {
+				"bindings": [
+					{
+						"class_name": "ChatRoom",
+						"name": "CHAT_ROOM"
+					}
+				]
+			},
+			"migrations": [
+				{
+					"tag": "v1",
+					"new_classes": ["ChatRoom"]
+				}
+			],
 			"name": "x--project-name--x",
 			"ai": {
 				"binding": "AI",
@@ -47,6 +78,20 @@
 			"vars": {
 				"SECRET_ENVIRONMENT_STATUS": "live", // For declaring if it is in maintenance or not
 			},
+			"durable_objects": {
+				"bindings": [
+					{
+						"class_name": "ChatRoom",
+						"name": "CHAT_ROOM"
+					}
+				]
+			},
+			"migrations": [
+				{
+					"tag": "v1",
+					"new_classes": ["ChatRoom"]
+				}
+			],
 			"name": "x--project-name--x-staging",
 			"ai": {
 				"binding": "AI",

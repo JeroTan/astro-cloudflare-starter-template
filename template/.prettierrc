@@ -7,5 +7,5 @@
 	"bracketSpacing": true,
 	"jsxSingleQuote": false,
 	"quoteProps": "as-needed",
-	"endOfLine": "lf",
+	"endOfLine": "lf"
 }
