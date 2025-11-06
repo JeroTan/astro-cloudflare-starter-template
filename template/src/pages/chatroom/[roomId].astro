@@ -98,7 +98,7 @@ const roomUrl = `${Astro.url.origin}/chatroom/${roomId}`;
 
 		function addSystemMessage(message: string): void {
 			// Clear "no messages" text
-			if (messagesDiv.querySelector("p.text-gray-500")) {
+			if (messagesDiv.querySelector("p.text-gray-500 text-wrap break-all")) {
 				messagesDiv.innerHTML = "";
 			}
 
