@@ -90,7 +90,7 @@ const roomUrl = `${Astro.url.origin}/chatroom/${roomId}`;
 			}
 
 			const msgDiv = document.createElement("div");
-			msgDiv.className = `p-3 rounded-lg ${isOwn ? "bg-blue-100 ml-auto" : "bg-gray-100"} max-w-[80%]`;
+			msgDiv.className = `p-3 rounded-lg ${isOwn ? "bg-blue-100 ml-auto" : "bg-gray-100"} max-w-[80%] text-wrap break-all`;
 			msgDiv.textContent = message;
 			messagesDiv.appendChild(msgDiv);
 			messagesDiv.scrollTop = messagesDiv.scrollHeight;
