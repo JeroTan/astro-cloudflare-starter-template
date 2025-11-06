@@ -15,7 +15,7 @@ export default defineConfig({
 		workerEntryPoint: {
 			path: "src/cloudflare/worker.ts",
 			namedExports: ["ChatRoom"],
-		}
+		},
 	}),
 	image: {
 		// Allow processing all images from remote. This allow modifying the images size depending on the device.

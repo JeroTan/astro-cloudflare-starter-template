@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
-import { execSync } from 'child_process';
-import { fileURLToPath } from 'url';
-import fs from 'fs';
-import path from 'path';
-import readline from 'readline';
+import { execSync } from "child_process";
+import { fileURLToPath } from "url";
+import fs from "fs";
+import path from "path";
+import readline from "readline";
 
 // Use to get the directory of the current script
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const templateDir = path.join(__dirname, 'template'); // Path to the template directory
+const templateDir = path.join(__dirname, "template"); // Path to the template directory
 
 // Setup readline interface
 const rl = readline.createInterface({
@@ -18,38 +18,49 @@ const rl = readline.createInterface({
 
 // Use to ask questions in the terminal
 function ask(question) {
-  return new Promise(resolve => rl.question(question, answer => resolve(answer)));
+  return new Promise((resolve) =>
+    rl.question(question, (answer) => resolve(answer)),
+  );
 }
-
 
 // Main function to create the project
 async function main() {
-  const projectName = process.argv[2] || (await ask('Project name (my-astro-project): ')) || 'my-astro-project'; // If user type the command line with the project name or type command then ask later
-  const projectLocation = process.argv[3] || (await ask('Where to create the project (. for current directory): ')) || '.'; // Ask for location or default to current directory
+  const projectName =
+    process.argv[2] ||
+    (await ask("Project name (my-astro-project): ")) ||
+    "my-astro-project"; // If user type the command line with the project name or type command then ask later
+  const projectLocation =
+    process.argv[3] ||
+    (await ask("Where to create the project (. for current directory): ")) ||
+    "."; // Ask for location or default to current directory
 
   // Optional KV namespace configuration
   // console.log('\n📦 KV Namespace Configuration (optional - press Enter to skip):');
   // const kvNamespace = await ask('KV Namespace binding name (e.g., KV_STORAGE): ');
   // const kvId = kvNamespace ? (await ask('KV Namespace ID: ')) : '';
-  
+
   rl.close(); // Close the readline interface or clean up
 
   const targetDir = path.resolve(process.cwd(), projectLocation);
 
   // Check if target directory exists and handle accordingly
   if (fs.existsSync(targetDir)) {
-    if (projectLocation !== '.') {
+    if (projectLocation !== ".") {
       console.error(`❌ Directory "${projectLocation}" already exists.`);
       process.exit(1);
     }
-    
+
     // For current directory, check if it's empty
     const files = fs.readdirSync(targetDir);
     if (files.length > 0) {
-      console.warn(`⚠️  Current directory is not empty. Files: ${files.slice(0, 3).join(', ')}${files.length > 3 ? '...' : ''}`);
-      const confirm = await ask('Continue anyway? This will overwrite existing files (y/N): ');
-      if (confirm.toLowerCase() !== 'y' && confirm.toLowerCase() !== 'yes') {
-        console.log('❌ Operation cancelled.');
+      console.warn(
+        `⚠️  Current directory is not empty. Files: ${files.slice(0, 3).join(", ")}${files.length > 3 ? "..." : ""}`,
+      );
+      const confirm = await ask(
+        "Continue anyway? This will overwrite existing files (y/N): ",
+      );
+      if (confirm.toLowerCase() !== "y" && confirm.toLowerCase() !== "yes") {
+        console.log("❌ Operation cancelled.");
         process.exit(1);
       }
     }
@@ -61,11 +72,13 @@ async function main() {
   const replaceInFile = (filePath) => {
     const stats = fs.statSync(filePath);
     if (stats.isDirectory()) {
-      fs.readdirSync(filePath).forEach(child => replaceInFile(path.join(filePath, child)));
+      fs.readdirSync(filePath).forEach((child) =>
+        replaceInFile(path.join(filePath, child)),
+      );
     } else {
-      const text = fs.readFileSync(filePath, 'utf8');
+      const text = fs.readFileSync(filePath, "utf8");
       let replaced = text.replace(/x--project-name--x/g, projectName);
-      
+
       // Replace KV namespace placeholders only in wrangler.jsonc
       // if (path.basename(filePath) === 'wrangler.jsonc') {
       //   if (kvNamespace) {
@@ -77,7 +90,7 @@ async function main() {
       //     replaced = replaced.replace(/x--kv-id--x/g, 'your-kv-namespace-id');
       //   }
       // }
-      
+
       fs.writeFileSync(filePath, replaced);
     }
   };
@@ -85,34 +98,34 @@ async function main() {
   replaceInFile(targetDir);
 
   // Rename gitignore.template back to .gitignore
-  const gitignoreTemplatePath = path.join(targetDir, 'gitignore.template');
-  const gitignorePath = path.join(targetDir, '.gitignore');
+  const gitignoreTemplatePath = path.join(targetDir, "gitignore.template");
+  const gitignorePath = path.join(targetDir, ".gitignore");
   if (fs.existsSync(gitignoreTemplatePath)) {
     fs.renameSync(gitignoreTemplatePath, gitignorePath);
   }
 
   // After creating the project, install dependencies
   console.log(`\n✅ Project "${projectName}" created!`);
-  console.log('\n📦 Installing dependencies...');
-  
+  console.log("\n📦 Installing dependencies...");
+
   try {
     // Run npm install in the project directory
-    execSync('npm install', { 
-      cwd: targetDir, 
-      stdio: 'inherit' // Show npm output normally
+    execSync("npm install", {
+      cwd: targetDir,
+      stdio: "inherit", // Show npm output normally
     });
 
-    console.log('✅ Dependencies installed successfully!');
-    
+    console.log("✅ Dependencies installed successfully!");
+
     // Run npm run check to validate the project setup
-    console.log('\n🔍 Running project validation...');
-    execSync('npm run check', { 
-      cwd: targetDir, 
-      stdio: 'inherit' // Show check output normally
+    console.log("\n🔍 Running project validation...");
+    execSync("npm run check", {
+      cwd: targetDir,
+      stdio: "inherit", // Show check output normally
     });
-    
-    console.log('✅ Project validation passed!');
-    
+
+    console.log("✅ Project validation passed!");
+
     console.log(`🎉 Project setup complete!`);
     console.log(`\nNext steps:`);
     console.log(`  cd ${path.basename(targetDir)}`);

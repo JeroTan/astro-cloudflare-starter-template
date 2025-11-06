@@ -24,9 +24,9 @@ export class ChatRoom extends DurableObject {
 				message: `WebSocket is connected for id ${this.ctx.id.toString()}`,
 				connections: connectionCount,
 				timestamp: new Date().toISOString(),
-			}
+			},
 		});
-		
+
 		// Send welcome message to the new client
 		server.send(systemMessage);
 
@@ -39,12 +39,12 @@ export class ChatRoom extends DurableObject {
 	async webSocketMessage(ws: WebSocket, message: ArrayBuffer | string) {
 		// Broadcast message to all connected clients
 		const messageText = typeof message === "string" ? message : new TextDecoder().decode(message);
-		
+
 		console.log(`Broadcasting message: ${messageText}`);
 
 		// Get all WebSockets in this room
 		const webSockets = this.ctx.getWebSockets();
-		
+
 		// Broadcast to all clients except sender
 		for (const socket of webSockets) {
 			if (socket !== ws) {
@@ -57,12 +57,7 @@ export class ChatRoom extends DurableObject {
 		}
 	}
 
-	async webSocketClose(
-		ws: WebSocket,
-		code: number,
-		reason: string,
-		wasClean: boolean,
-	) {
+	async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
 		console.log(`WebSocket closed. Code: ${code}, Reason: ${reason}`);
 		ws.close(code, "Durable Object is closing WebSocket");
 	}

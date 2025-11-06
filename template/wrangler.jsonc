@@ -28,15 +28,15 @@
 		"bindings": [
 			{
 				"class_name": "ChatRoom",
-				"name": "CHAT_ROOM"
-			}
-		]
+				"name": "CHAT_ROOM",
+			},
+		],
 	},
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": ["ChatRoom"]
-		}
+			"new_sqlite_classes": ["ChatRoom"],
+		},
 	],
 	"env": {
 		"production": {
@@ -59,15 +59,15 @@
 				"bindings": [
 					{
 						"class_name": "ChatRoom",
-						"name": "CHAT_ROOM"
-					}
-				]
+						"name": "CHAT_ROOM",
+					},
+				],
 			},
 			"migrations": [
 				{
 					"tag": "v1",
-					"new_sqlite_classes": ["ChatRoom"]
-				}
+					"new_sqlite_classes": ["ChatRoom"],
+				},
 			],
 			"name": "x--project-name--x",
 			"ai": {
@@ -82,15 +82,15 @@
 				"bindings": [
 					{
 						"class_name": "ChatRoom",
-						"name": "CHAT_ROOM"
-					}
-				]
+						"name": "CHAT_ROOM",
+					},
+				],
 			},
 			"migrations": [
 				{
 					"tag": "v1",
-					"new_sqlite_classes": ["ChatRoom"]
-				}
+					"new_sqlite_classes": ["ChatRoom"],
+				},
 			],
 			"name": "x--project-name--x-staging",
 			"ai": {
