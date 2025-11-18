@@ -50,8 +50,15 @@ async function main() {
       process.exit(1);
     }
 
-    // For current directory, check if it's empty
-    const files = fs.readdirSync(targetDir);
+    // For current directory, check if it's empty (ignore hidden files)
+    const files = fs.readdirSync(targetDir).filter(file => {
+      // Ignore hidden files and directories (starting with .)
+      if (file.startsWith('.')) return false;
+      // Ignore common metadata files
+      if (['node_modules', 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml'].includes(file)) return false;
+      return true;
+    });
+    
     if (files.length > 0) {
       console.warn(
         `⚠️  Current directory is not empty. Files: ${files.slice(0, 3).join(", ")}${files.length > 3 ? "..." : ""}`,
